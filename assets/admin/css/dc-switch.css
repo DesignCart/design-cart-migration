@@ -1,0 +1,192 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — Switch buttons (checkbox & radio jako przyciski)
+ */
+
+/* Grupa switch-buttonów */
+.dc-switch-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 4px;
+  gap: 4px;
+  background: var(--dc-bg-muted, #f4f7f9);
+  border: 1px solid var(--dc-border, #d8dee8);
+  border-radius: var(--dc-radius-full, 9999px);
+}
+
+.dc-switch-group--block {
+  display: flex;
+  width: 100%;
+}
+
+.dc-switch-group--block .dc-switch-btn {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Pojedynczy switch-btn */
+.dc-switch-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dc-switch-btn__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.dc-switch-btn__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dc-text-muted, #5c6578);
+  border-radius: var(--dc-radius-full, 9999px);
+  background: transparent;
+  transition:
+    color var(--dc-transition, 180ms ease),
+    background var(--dc-transition, 180ms ease),
+    box-shadow var(--dc-transition, 180ms ease);
+  white-space: nowrap;
+}
+
+.dc-switch-btn:hover .dc-switch-btn__label {
+  color: var(--dc-brand, #1fa28c);
+}
+
+.dc-switch-btn__input:focus-visible + .dc-switch-btn__label {
+  outline: 2px solid var(--dc-brand, #1fa28c);
+  outline-offset: 2px;
+}
+
+.dc-switch-btn__input:checked + .dc-switch-btn__label {
+  background: var(--dc-bg-elevated, #fff);
+  color: var(--dc-brand, #1fa28c);
+  box-shadow: var(--dc-shadow-sm, 0 1px 2px rgba(38, 44, 56, 0.06));
+}
+
+/* Wariant „solid” — aktywny z gradientem (radio/checkbox w nav) */
+.dc-switch-group--solid .dc-switch-btn__input:checked + .dc-switch-btn__label {
+  background: linear-gradient(135deg, var(--dc-brand, #1fa28c), var(--dc-accent, #1ca7ca));
+  color: #fff;
+  box-shadow: 0 4px 14px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+}
+
+.dc-switch-btn__input:disabled + .dc-switch-btn__label {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Toggle switch (checkbox on/off) — istniejący komponent, alias dc-toggle */
+.dc-interface .dc-toggle,
+.dc-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dc-space, 0.75rem);
+  cursor: pointer;
+  user-select: none;
+}
+
+.dc-interface .dc-toggle__input,
+.dc-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.dc-interface .dc-toggle__track,
+.dc-toggle__track {
+  width: 48px;
+  height: 26px;
+  background: var(--dc-border, #d8dee8);
+  border-radius: var(--dc-radius-full, 9999px);
+  position: relative;
+  transition: background var(--dc-transition, 180ms ease);
+  flex-shrink: 0;
+}
+
+.dc-interface .dc-toggle__track::after,
+.dc-toggle__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: var(--dc-bg-elevated, #fff);
+  border-radius: var(--dc-radius-full, 9999px);
+  box-shadow: var(--dc-shadow-sm, 0 1px 2px rgba(38, 44, 56, 0.06));
+  transition: translate var(--dc-transition-slow, 320ms ease);
+}
+
+.dc-interface .dc-toggle__input:checked + .dc-toggle__track,
+.dc-toggle__input:checked + .dc-toggle__track {
+  background: linear-gradient(90deg, var(--dc-brand, #1fa28c), var(--dc-accent, #1ca7ca));
+}
+
+.dc-interface .dc-toggle__input:checked + .dc-toggle__track::after,
+.dc-toggle__input:checked + .dc-toggle__track::after {
+  translate: 22px 0;
+}
+
+.dc-interface .dc-toggle__input:focus-visible + .dc-toggle__track,
+.dc-toggle__input:focus-visible + .dc-toggle__track {
+  box-shadow: 0 0 0 3px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+}
+
+/* Karta z switch-btn (radio/checkbox) */
+.dc-switch-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.dc-switch-card .dc-switch-btn__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.dc-switch-card__body {
+  padding: var(--dc-space-md, 1rem);
+  border: 1.5px solid var(--dc-border, #d8dee8);
+  border-radius: var(--dc-radius, 10px);
+  background: var(--dc-bg, #fff);
+  transition: all var(--dc-transition, 180ms ease);
+}
+
+.dc-switch-card__title {
+  font-weight: 600;
+  margin-bottom: var(--dc-space-xs, 0.25rem);
+}
+
+.dc-switch-card .dc-switch-btn__input:checked ~ .dc-switch-card__body {
+  border-color: var(--dc-brand, #1fa28c);
+  background: var(--dc-brand-subtle, rgba(31, 162, 140, 0.1));
+  box-shadow: inset 0 0 0 1px var(--dc-brand, #1fa28c);
+}
+
+.dc-switch-card:hover .dc-switch-card__body {
+  border-color: color-mix(in srgb, var(--dc-brand, #1fa28c) 50%, var(--dc-border, #d8dee8));
+}

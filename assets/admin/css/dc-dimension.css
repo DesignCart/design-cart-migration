@@ -1,0 +1,236 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — komponent wymiaru (range + input + px/%)
+ * Działa samodzielnie i wewnątrz .dc-interface
+ */
+
+.dc-dimension {
+  --dc-dim-track: var(--dc-bg-muted, #f4f7f9);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.dc-dimension__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dc-text, #262c38);
+}
+
+.dc-dimension__control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* Range — spójny z dc-range */
+.dc-dimension__range {
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--dc-dim-track);
+  border-radius: var(--dc-radius-full, 9999px);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.dc-dimension__range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--dc-radius-full, 9999px);
+  background: linear-gradient(135deg, var(--dc-brand, #1fa28c), var(--dc-accent, #1ca7ca));
+  box-shadow: 0 2px 8px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+  cursor: grab;
+  transition: scale var(--dc-transition, 180ms ease);
+}
+
+.dc-dimension__range::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  scale: 1.12;
+}
+
+.dc-dimension__range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: var(--dc-radius-full, 9999px);
+  background: linear-gradient(135deg, var(--dc-brand, #1fa28c), var(--dc-accent, #1ca7ca));
+  box-shadow: 0 2px 8px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+  cursor: grab;
+}
+
+.dc-dimension__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.dc-dimension__number {
+  width: 100%;
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  background: var(--dc-bg, #fff);
+  border: 1.5px solid var(--dc-border, #d8dee8);
+  border-radius: var(--dc-radius-sm, 6px);
+  color: var(--dc-text, #262c38);
+  outline: none;
+  transition: border-color var(--dc-transition, 180ms ease), box-shadow var(--dc-transition, 180ms ease);
+}
+
+.dc-dimension__number:focus {
+  border-color: var(--dc-brand, #1fa28c);
+  box-shadow: 0 0 0 3px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+}
+
+.dc-dimension__number::-webkit-outer-spin-button,
+.dc-dimension__number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dc-dimension__number[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Przełącznik px / % */
+.dc-dimension__units {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--dc-bg-muted, #f4f7f9);
+  border: 1px solid var(--dc-border, #d8dee8);
+  border-radius: var(--dc-radius-full, 9999px);
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.dc-dimension__unit-btn {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dc-dimension__unit-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.dc-dimension__unit-label {
+  display: block;
+  min-width: 2.35rem;
+  padding: 0.4rem 0.55rem;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  border-radius: var(--dc-radius-full, 9999px);
+  color: var(--dc-text-muted, #5c6578);
+  transition: all var(--dc-transition, 180ms ease);
+}
+
+.dc-dimension__unit-btn:hover .dc-dimension__unit-label {
+  color: var(--dc-brand, #1fa28c);
+}
+
+.dc-dimension__unit-radio:checked + .dc-dimension__unit-label {
+  background: var(--dc-bg-elevated, #fff);
+  color: var(--dc-brand, #1fa28c);
+  box-shadow: var(--dc-shadow-sm, 0 1px 2px rgba(38, 44, 56, 0.06));
+}
+
+.dc-dimension__unit-radio:focus-visible + .dc-dimension__unit-label {
+  outline: 2px solid var(--dc-brand, #1fa28c);
+  outline-offset: 2px;
+}
+
+/* Para W × H */
+.dc-dimension-pair {
+  display: grid;
+  gap: var(--dc-space-md, 1rem);
+}
+
+@media (min-width: 540px) {
+  .dc-dimension-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.dc-dimension-pair__shared-units {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-top: -0.25rem;
+}
+
+.dc-dimension-pair__shared-units .dc-dimension__units {
+  margin: 0;
+}
+
+.dc-dimension-pair__shared-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dc-text-muted, #5c6578);
+}
+
+/* Wariant bez przełącznika (tylko px) */
+.dc-dimension--fixed .dc-dimension__row {
+  grid-template-columns: 1fr;
+}
+
+.dc-dimension--fixed .dc-dimension__suffix {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dc-text-muted, #5c6578);
+  pointer-events: none;
+}
+
+.dc-dimension--fixed .dc-dimension__number-wrap {
+  position: relative;
+}
+
+.dc-dimension--fixed .dc-dimension__number {
+  padding-right: 2.25rem;
+  text-align: left;
+}
+
+.dc-interface.dc-dark .dc-dimension__number,
+.dc-page.dc-dark .dc-dimension__number {
+  background: var(--dc-surface, #262c38);
+  border-color: var(--dc-border, #3a4254);
+}
+
+.dc-interface.dc-dark .dc-dimension__units,
+.dc-page.dc-dark .dc-dimension__units {
+  background: var(--dc-bg-muted, #222833);
+  border-color: var(--dc-border, #3a4254);
+}
+
+.dc-interface.dc-dark .dc-dimension__unit-radio:checked + .dc-dimension__unit-label,
+.dc-page.dc-dark .dc-dimension__unit-radio:checked + .dc-dimension__unit-label {
+  background: var(--dc-bg-elevated, #1a1f28);
+}

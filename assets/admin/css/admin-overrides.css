@@ -1,0 +1,366 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+body.dccm-admin #wpcontent {
+  padding-left: 0;
+}
+
+body.dccm-admin #wpbody-content {
+  padding-bottom: 0;
+}
+
+body.dccm-admin .wrap.dccm-wrap {
+  margin: 0;
+  max-width: none;
+}
+
+body.dccm-admin .wrap.dccm-wrap > h1 {
+  display: none;
+}
+
+body.dccm-admin #wpbody-content > .notice,
+body.dccm-admin #wpbody-content > .updated,
+body.dccm-admin #wpbody-content > .error {
+  display: none !important;
+}
+
+.dccm-page {
+  min-height: calc(100vh - 32px);
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(31, 162, 140, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 95% 0%, rgba(28, 167, 202, 0.12), transparent 50%),
+    linear-gradient(180deg, #eef4f3 0%, #f1f5f9 100%);
+  padding-bottom: 3rem;
+}
+
+.dccm-page .dc-page__wrap {
+  max-width: 1100px;
+  margin: -2.5rem auto 0;
+  padding: 0 1.25rem;
+  position: relative;
+  z-index: 2;
+}
+
+.dccm-page .dc-form-card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.1);
+  background: #fff;
+}
+
+.dccm-page .dc-form-card__body {
+  padding: 1.35rem 1.5rem 1.75rem;
+}
+
+.dccm-page .dc-section-card {
+  margin-bottom: 1.25rem;
+}
+
+.dccm-page .dc-section-card:last-child {
+  margin-bottom: 0;
+}
+
+.dccm-page .dc-hint {
+  margin: 0.35rem 0 0;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.dccm-page .dc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.dccm-page .dc-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.dccm-page .dc-alert--ok {
+  background: rgba(31, 162, 140, 0.12);
+  color: #0d6b5c;
+  border: 1px solid rgba(31, 162, 140, 0.28);
+}
+
+.dccm-page .dc-alert--warn {
+  background: rgba(234, 179, 8, 0.12);
+  color: #854d0e;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+}
+
+.dccm-page .dc-alert--err {
+  background: rgba(220, 38, 38, 0.08);
+  color: #991b1b;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+.dccm-page .dc-alert i {
+  margin-top: 0.15rem;
+}
+
+/* Font Awesome 4 — protect icons from .dc-btn / .dc-interface font inheritance. */
+.dccm-page .fa,
+.dccm-page .fa:before,
+.dc-hero .fa,
+.dc-hero .fa:before,
+.dc-interface .fa,
+.dc-interface .fa:before {
+  font-family: FontAwesome !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dccm-page code {
+  font-size: 0.85em;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: #f1f5f9;
+}
+
+.dccm-progress {
+  margin-top: 1rem;
+  display: none;
+}
+
+.dccm-progress.is-active {
+  display: block;
+}
+
+.dccm-progress__bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.dccm-progress__fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1fa28c, #1ca7ca);
+  transition: width 0.25s ease;
+}
+
+.dccm-progress__text {
+  margin-top: 0.45rem;
+  font-size: 0.88rem;
+  color: #475569;
+  font-weight: 600;
+}
+
+/* Full-screen busy overlay — blocks interaction during long jobs */
+body.dccm-busy-lock {
+  overflow: hidden;
+}
+
+.dccm-busy {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(4px);
+}
+
+.dccm-busy[hidden] {
+  display: none !important;
+}
+
+.dccm-busy__card {
+  width: min(440px, 100%);
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+  text-align: center;
+}
+
+.dccm-busy__spinner {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  border: 3px solid rgba(31, 162, 140, 0.2);
+  border-top-color: #1fa28c;
+  animation: dccm-spin 0.8s linear infinite;
+}
+
+@keyframes dccm-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dccm-busy__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.dccm-busy__hint {
+  margin: 0 0 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.dccm-busy__bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.dccm-busy__fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1fa28c, #1ca7ca);
+  transition: width 0.2s ease;
+}
+
+.dccm-busy__status {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: #475569;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.dccm-busy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1.15rem;
+}
+
+.dccm-busy__actions[hidden] {
+  display: none !important;
+}
+
+.dccm-busy--done .dccm-busy__card {
+  padding-top: 1.5rem;
+}
+
+.dccm-export-download {
+  display: inline-flex;
+  margin-top: 0.85rem;
+}
+
+.dccm-export-download[hidden] {
+  display: none !important;
+}
+
+.dccm-results {
+  margin-top: 1rem;
+  display: none;
+}
+
+.dccm-results.is-active {
+  display: block;
+}
+
+.dccm-results__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.dccm-results__table th,
+.dccm-results__table td {
+  text-align: left;
+  padding: 0.55rem 0.65rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.dccm-results__table th {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.dccm-tables-list {
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 12px;
+  padding: 0.45rem 0.65rem;
+  background: #f8fafc;
+}
+
+.dccm-tables-list label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.25rem;
+  font-size: 0.9rem;
+  color: #334155;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.dccm-tables-list label:last-child {
+  border-bottom: 0;
+}
+
+.dccm-tables-list input {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.dccm-tables-list__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dccm-tables-list__size {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.dccm-tables-list__size.is-md {
+  background: rgba(234, 179, 8, 0.18);
+  color: #854d0e;
+}
+
+.dccm-tables-list__size.is-lg {
+  background: rgba(249, 115, 22, 0.16);
+  color: #9a3412;
+}
+
+.dccm-tables-list__size.is-xl {
+  background: rgba(220, 38, 38, 0.12);
+  color: #991b1b;
+}

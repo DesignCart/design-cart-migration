@@ -1,0 +1,230 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — Tabs
+ * Główny wariant: dc-nav + dc-tabs (pills jak w dc_blog settings)
+ */
+
+/* ── Underline tabs (wewnętrzne, np. języki SEO) ── */
+.dc-interface .dc-tabs:not(.dc-nav),
+.dc-tabs:not(.dc-nav) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 2px solid var(--dc-border, #d8dee8);
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.dc-interface .dc-tabs:not(.dc-nav) .dc-tabs__btn,
+.dc-tabs:not(.dc-nav) .dc-tabs__btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--dc-text-muted, #5c6578);
+  padding: 0.85rem 1.25rem;
+  margin-bottom: -2px;
+  border-bottom: 2px solid transparent;
+  transition: color var(--dc-transition, 180ms ease), border-color var(--dc-transition, 180ms ease);
+}
+
+.dc-interface .dc-tabs:not(.dc-nav) .dc-tabs__btn:hover,
+.dc-tabs:not(.dc-nav) .dc-tabs__btn:hover {
+  color: var(--dc-brand, #1fa28c);
+}
+
+.dc-interface .dc-tabs:not(.dc-nav) .dc-tabs__btn.dc-active,
+.dc-interface .dc-tabs:not(.dc-nav) .dc-tabs__btn.is-active,
+.dc-tabs:not(.dc-nav) .dc-tabs__btn.dc-active,
+.dc-tabs:not(.dc-nav) .dc-tabs__btn.is-active {
+  color: var(--dc-brand, #1fa28c);
+  border-bottom-color: var(--dc-brand, #1fa28c);
+}
+
+/* ── Pill nav — główne taby modułu (jak settings.twig) ── */
+.dc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.95rem 1.5rem 1.05rem;
+  margin: 0;
+  background: linear-gradient(180deg, #fafcfd 0%, #fff 100%);
+  border-bottom: 1px solid var(--dc-line, rgba(15, 23, 42, 0.08));
+  list-style: none;
+}
+
+.dc-form-card .dc-nav.dc-tabs,
+.dc-card .dc-nav.dc-tabs {
+  padding: 1rem 1.75rem 1.15rem;
+  gap: 0.45rem;
+}
+
+.dc-form-card .dc-nav.dc-tabs .dc-nav__btn,
+.dc-form-card .dc-nav.dc-tabs .dc-tabs__btn,
+.dc-card .dc-nav.dc-tabs .dc-nav__btn,
+.dc-card .dc-nav.dc-tabs .dc-tabs__btn {
+  margin-bottom: 0;
+  border-bottom: none;
+  border-radius: var(--dc-radius-full, 9999px);
+}
+
+.dc-nav__btn,
+.dc-nav .dc-tabs__btn {
+  appearance: none;
+  border: 1.5px solid transparent;
+  background: var(--dc-surface-2, #f8fafc);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13.44px;
+  color: var(--dc-muted, #64748b);
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--dc-radius-full, 9999px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.25;
+}
+
+.dc-nav__btn i,
+.dc-nav .dc-tabs__btn i {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.dc-nav__btn:hover,
+.dc-nav .dc-tabs__btn:hover {
+  color: var(--dc-brand, #1fa28c);
+  border-color: rgba(var(--dc-brand-rgb, 31, 162, 140), 0.25);
+  background: rgba(var(--dc-brand-rgb, 31, 162, 140), 0.06);
+}
+
+.dc-nav__btn.dc-active,
+.dc-nav__btn.is-active,
+.dc-nav__btn.dc-active:hover,
+.dc-nav__btn.is-active:hover,
+.dc-nav__btn.dc-active:focus,
+.dc-nav__btn.is-active:focus,
+.dc-nav .dc-tabs__btn.dc-active,
+.dc-nav .dc-tabs__btn.is-active {
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--dc-brand, #1fa28c) 0%, var(--dc-accent, #1ca7ca) 100%);
+  border-color: transparent;
+  box-shadow: 0 6px 20px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+}
+
+.dc-nav__btn.dc-active i,
+.dc-nav__btn.is-active i,
+.dc-nav__btn.dc-active:hover i,
+.dc-nav__btn.is-active:hover i {
+  color: #fff !important;
+  opacity: 1;
+}
+
+/* ── Panele tabów ── */
+.dc-interface .dc-tab-panel,
+.dc-tab-panel {
+  display: none;
+}
+
+.dc-interface .dc-tab-panel.dc-active,
+.dc-interface .dc-tab-panel.is-active,
+.dc-form-card .dc-tab-panel.dc-active,
+.dc-form-card .dc-tab-panel.is-active,
+.dc-tab-panel.dc-active,
+.dc-tab-panel.is-active {
+  display: block;
+  animation: dcFadeUp 0.35s ease;
+}
+
+.dc-interface .dc-lang-panel,
+.dc-lang-panel {
+  display: none;
+}
+
+.dc-interface .dc-lang-panel.dc-active,
+.dc-interface .dc-lang-panel.is-active,
+.dc-lang-panel.dc-active,
+.dc-lang-panel.is-active {
+  display: block;
+}
+
+/* ── Language pills ── */
+.dc-pills,
+.dc-lang-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.35rem;
+  list-style: none;
+  padding: 0;
+}
+
+.dc-pills__btn,
+.dc-lang-pill,
+.dc-lang-pills .dc-tabs__btn {
+  appearance: none;
+  border: 1.5px solid var(--dc-line, rgba(15, 23, 42, 0.08));
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14.08px;
+  color: var(--dc-muted, #64748b);
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--dc-radius-full, 9999px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+  margin-bottom: 0;
+}
+
+.dc-pills__btn:hover,
+.dc-lang-pill:hover,
+.dc-lang-pills .dc-tabs__btn:hover {
+  border-color: rgba(var(--dc-brand-rgb, 31, 162, 140), 0.4);
+  color: var(--dc-brand, #1fa28c);
+}
+
+.dc-pills__btn.dc-active,
+.dc-pills__btn.is-active,
+.dc-lang-pill.dc-active,
+.dc-lang-pill.is-active,
+.dc-lang-pills .dc-tabs__btn.dc-active,
+.dc-lang-pills .dc-tabs__btn.is-active {
+  background: var(--dc-ink, #0f172a);
+  border-color: var(--dc-ink, #0f172a);
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+}
+
+@keyframes dcFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .dc-form-card .dc-nav.dc-tabs,
+  .dc-card .dc-nav.dc-tabs {
+    padding: 0.85rem 1.1rem 0.95rem;
+    gap: 0.35rem;
+  }
+
+  .dc-nav__btn,
+  .dc-nav .dc-tabs__btn {
+    font-size: 12.8px;
+    padding: 0.45rem 0.8rem;
+  }
+}

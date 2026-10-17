@@ -1,0 +1,420 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Color Picker — samodzielny komponent
+ * Działa bez dc-interface.css; opcjonalnie integruje się z .dc-interface
+ *
+ * Użycie:
+ *   <link rel="stylesheet" href="css/dc-colorpicker.css">
+ *   <div class="dc-colorpicker" data-dc-colorpicker data-value="#1fa28c"></div>
+ */
+
+.dc-colorpicker {
+  --dc-cp-brand: #1fa28c;
+  --dc-cp-brand-rgb: 31, 162, 140;
+  --dc-cp-accent: #1ca7ca;
+  --dc-cp-dark: #262c38;
+  --dc-cp-dark-rgb: 38, 44, 56;
+
+  --dc-cp-text: var(--dc-cp-dark);
+  --dc-cp-text-muted: #5c6578;
+  --dc-cp-bg: #ffffff;
+  --dc-cp-bg-muted: #f4f7f9;
+  --dc-cp-border: #d8dee8;
+  --dc-cp-radius: 10px;
+  --dc-cp-radius-sm: 6px;
+  --dc-cp-shadow: 0 8px 32px rgba(var(--dc-cp-dark-rgb), 0.14);
+  --dc-cp-transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: relative;
+  display: inline-flex;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--dc-cp-text);
+}
+
+.dc-colorpicker *,
+.dc-colorpicker *::before,
+.dc-colorpicker *::after {
+  box-sizing: border-box;
+}
+
+/* ── Trigger ── */
+.dc-colorpicker__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.85rem 0.5rem 0.5rem;
+  background: var(--dc-cp-bg);
+  border: 1.5px solid var(--dc-cp-border);
+  border-radius: var(--dc-cp-radius);
+  cursor: pointer;
+  transition: border-color var(--dc-cp-transition), box-shadow var(--dc-cp-transition);
+  min-width: 140px;
+}
+
+.dc-colorpicker__trigger:hover {
+  border-color: color-mix(in srgb, var(--dc-cp-brand) 45%, var(--dc-cp-border));
+}
+
+.dc-colorpicker__trigger:focus-visible {
+  outline: none;
+  border-color: var(--dc-cp-brand);
+  box-shadow: 0 0 0 3px rgba(var(--dc-cp-brand-rgb), 0.3);
+}
+
+.dc-colorpicker.dc-open .dc-colorpicker__trigger {
+  border-color: var(--dc-cp-brand);
+  box-shadow: 0 0 0 3px rgba(var(--dc-cp-brand-rgb), 0.2);
+}
+
+.dc-colorpicker__preview {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--dc-cp-radius-sm);
+  border: 2px solid rgba(var(--dc-cp-dark-rgb), 0.08);
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.dc-colorpicker__label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dc-colorpicker__hex-display {
+  margin-left: auto;
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 13px;
+  color: var(--dc-cp-text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Popover ── */
+.dc-colorpicker__popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 200;
+  width: 260px;
+  padding: 1rem;
+  background: var(--dc-cp-bg);
+  border: 1px solid var(--dc-cp-border);
+  border-radius: calc(var(--dc-cp-radius) + 2px);
+  box-shadow: var(--dc-cp-shadow);
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -6px;
+  transition:
+    opacity var(--dc-cp-transition),
+    visibility var(--dc-cp-transition),
+    translate var(--dc-cp-transition);
+}
+
+.dc-colorpicker.dc-open .dc-colorpicker__popover {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+}
+
+.dc-colorpicker.dc-popover-up .dc-colorpicker__popover {
+  top: auto;
+  bottom: calc(100% + 8px);
+  translate: 0 6px;
+}
+
+.dc-colorpicker.dc-open.dc-popover-up .dc-colorpicker__popover {
+  translate: 0 0;
+}
+
+/* ── SL plane (saturation × value) ── */
+.dc-colorpicker__sl {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  border-radius: var(--dc-cp-radius-sm);
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: none;
+  margin-bottom: 0.75rem;
+}
+
+.dc-colorpicker__sl-bg {
+  position: absolute;
+  inset: 0;
+  background: hsl(var(--dc-cp-hue, 165), 100%, 50%);
+}
+
+.dc-colorpicker__sl-white {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.dc-colorpicker__sl-black {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #000, transparent);
+}
+
+.dc-colorpicker__sl-cursor {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.2);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+/* ── Hue slider ── */
+.dc-colorpicker__hue-wrap {
+  position: relative;
+  height: 14px;
+  margin-bottom: 0.85rem;
+  border-radius: var(--dc-cp-radius-full, 9999px);
+  background: linear-gradient(
+    to right,
+    #f00 0%,
+    #ff0 17%,
+    #0f0 33%,
+    #0ff 50%,
+    #00f 67%,
+    #f0f 83%,
+    #f00 100%
+  );
+  cursor: pointer;
+  touch-action: none;
+}
+
+.dc-colorpicker__hue-thumb {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 2px solid rgba(var(--dc-cp-dark-rgb), 0.15);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+/* ── Alpha slider (opcjonalny) ── */
+.dc-colorpicker__alpha-wrap {
+  position: relative;
+  height: 14px;
+  margin-bottom: 0.85rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  touch-action: none;
+  background:
+    repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 10px 10px;
+  overflow: hidden;
+}
+
+.dc-colorpicker__alpha-wrap[hidden] {
+  display: none;
+}
+
+.dc-colorpicker__alpha-gradient {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.dc-colorpicker__alpha-thumb {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 2px solid rgba(var(--dc-cp-dark-rgb), 0.15);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+/* ── Pola HEX / RGB ── */
+.dc-colorpicker__fields {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.dc-colorpicker__hex {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+  border: 1.5px solid var(--dc-cp-border);
+  border-radius: var(--dc-cp-radius-sm);
+  background: var(--dc-cp-bg-muted);
+  color: var(--dc-cp-text);
+  outline: none;
+  transition: border-color var(--dc-cp-transition), box-shadow var(--dc-cp-transition);
+}
+
+.dc-colorpicker__hex:focus {
+  border-color: var(--dc-cp-brand);
+  box-shadow: 0 0 0 2px rgba(var(--dc-cp-brand-rgb), 0.2);
+}
+
+.dc-colorpicker__hex.dc-invalid {
+  border-color: #e5484d;
+}
+
+.dc-colorpicker__eyedropper {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  padding: 0;
+  border: 1.5px solid var(--dc-cp-border);
+  border-radius: var(--dc-cp-radius-sm);
+  background: var(--dc-cp-bg-muted);
+  color: var(--dc-cp-text-muted);
+  cursor: pointer;
+  transition: all var(--dc-cp-transition);
+}
+
+.dc-colorpicker__eyedropper:hover {
+  border-color: var(--dc-cp-brand);
+  color: var(--dc-cp-brand);
+}
+
+.dc-colorpicker__eyedropper svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Presety ── */
+.dc-colorpicker__presets-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dc-cp-text-muted);
+  margin: 0 0 0.45rem;
+}
+
+.dc-colorpicker__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dc-colorpicker__preset {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--dc-cp-radius-sm);
+  cursor: pointer;
+  transition: transform var(--dc-cp-transition), border-color var(--dc-cp-transition);
+  box-shadow: inset 0 0 0 1px rgba(var(--dc-cp-dark-rgb), 0.1);
+}
+
+.dc-colorpicker__preset:hover {
+  transform: scale(1.12);
+}
+
+.dc-colorpicker__preset.dc-active {
+  border-color: var(--dc-cp-brand);
+  box-shadow: 0 0 0 2px rgba(var(--dc-cp-brand-rgb), 0.25);
+}
+
+/* ── Ukryty input formularza ── */
+.dc-colorpicker__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Wariant kompaktowy ── */
+.dc-colorpicker.dc-compact .dc-colorpicker__trigger {
+  min-width: auto;
+  padding: 0.35rem;
+}
+
+.dc-colorpicker.dc-compact .dc-colorpicker__label,
+.dc-colorpicker.dc-compact .dc-colorpicker__hex-display {
+  display: none;
+}
+
+.dc-colorpicker.dc-compact .dc-colorpicker__preview {
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Integracja z dc-interface (dark mode) ── */
+..dc-interface.dc-dark .dc-colorpicker {
+  --dc-cp-text: #e8ecf2;
+  --dc-cp-text-muted: #9aa3b5;
+  --dc-cp-bg: #262c38;
+  --dc-cp-bg-muted: #1a1f28;
+  --dc-cp-border: #3a4254;
+}
+
+/* ── Tryb pipety (fallback — próbkowanie ze strony) ── */
+body.dc-colorpicker-picking {
+  cursor: crosshair !important;
+}
+
+body.dc-colorpicker-picking * {
+  cursor: crosshair !important;
+}
+
+.dc-colorpicker__pick-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.dc-colorpicker__pick-hint {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0.65rem 1.25rem;
+  background: rgba(38, 44, 56, 0.92);
+  color: #fff;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 999px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.dc-colorpicker__pick-loupe {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 4px var(--loupe-color, transparent);
+  translate: -50% -50%;
+  pointer-events: none;
+  transition: background 80ms linear;
+}
+
+.dc-colorpicker__eyedropper.dc-unavailable {
+  opacity: 0.85;
+}

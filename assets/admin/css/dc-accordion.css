@@ -1,0 +1,118 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — Accordion
+ */
+
+.dc-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.dc-accordion__item {
+  border: 1.5px solid var(--dc-border, #d8dee8);
+  border-radius: var(--dc-radius, 10px);
+  background: var(--dc-bg, #fff);
+  overflow: hidden;
+  transition: border-color var(--dc-transition, 180ms ease), box-shadow var(--dc-transition, 180ms ease);
+}
+
+.dc-accordion__item.dc-open {
+  border-color: color-mix(in srgb, var(--dc-brand, #1fa28c) 35%, var(--dc-border, #d8dee8));
+  box-shadow: var(--dc-shadow-sm, 0 1px 2px rgba(38, 44, 56, 0.06));
+}
+
+.dc-accordion__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dc-text, #262c38);
+  text-align: left;
+  transition: background var(--dc-transition, 180ms ease);
+}
+
+.dc-accordion__trigger:hover {
+  background: var(--dc-bg-muted, #f4f7f9);
+}
+
+.dc-accordion__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--dc-radius-sm, 6px);
+  background: linear-gradient(135deg, rgba(var(--dc-brand-rgb, 31, 162, 140), 0.14), rgba(var(--dc-accent-rgb, 28, 167, 202), 0.12));
+  color: var(--dc-brand, #1fa28c);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+}
+
+.dc-accordion__title {
+  flex: 1;
+}
+
+.dc-accordion__sub {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dc-text-muted, #5c6578);
+  margin-top: 0.15rem;
+}
+
+.dc-accordion__chevron {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--dc-text-muted, #5c6578);
+  transition: rotate var(--dc-transition-slow, 320ms ease);
+}
+
+.dc-accordion__item.dc-open .dc-accordion__chevron {
+  rotate: 180deg;
+  color: var(--dc-brand, #1fa28c);
+}
+
+.dc-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dc-transition-slow, 320ms ease);
+}
+
+.dc-accordion__item.dc-open .dc-accordion__panel {
+  grid-template-rows: 1fr;
+}
+
+.dc-accordion__content {
+  overflow: hidden;
+}
+
+.dc-accordion__body {
+  padding: 0 1.15rem 1.15rem;
+  color: var(--dc-text-muted, #5c6578);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.dc-interface.dc-dark .dc-accordion__item,
+.dc-page.dc-dark .dc-accordion__item {
+  background: var(--dc-surface, #262c38);
+}
+
+.dc-interface.dc-dark .dc-accordion__trigger:hover,
+.dc-page.dc-dark .dc-accordion__trigger:hover {
+  background: var(--dc-bg-muted, #222833);
+}

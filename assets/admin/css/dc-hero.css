@@ -1,0 +1,229 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — Hero banner
+ * Działa samodzielnie (poza .dc-interface)
+ */
+
+.dc-hero {
+  position: relative;
+  padding: 2.25rem 2rem 3.5rem;
+  color: #fff;
+  overflow: hidden;
+}
+
+.dc-hero__mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(125deg, #0a4f44 0%, #137566 28%, #1fa28c 52%, #1ca7ca 78%, #1590b8 100%);
+  z-index: 0;
+}
+
+.dc-hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.45;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dc-hero__orb--1 {
+  width: 320px;
+  height: 320px;
+  background: #5eead4;
+  top: -120px;
+  right: 8%;
+}
+
+.dc-hero__orb--2 {
+  width: 240px;
+  height: 240px;
+  background: #7dd3fc;
+  bottom: -80px;
+  left: 12%;
+  opacity: 0.3;
+}
+
+.dc-hero__logo {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  width: min(384px, 37vw);
+  max-width: none;
+  height: auto;
+  transform: translateY(-48%) rotate(14deg);
+  opacity: 0.38;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  user-select: none;
+}
+
+.dc-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.dc-hero__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.dc-hero__brand {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.dc-hero__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  display: grid;
+  place-items: center;
+  font-size: 23.2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dc-hero__eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 12.8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.82;
+}
+
+.dc-hero__title {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.dc-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.dc-hero__bc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14.08px;
+  opacity: 0.92;
+}
+
+.dc-hero__bc li + li::before {
+  content: "/";
+  margin: 0 0.45rem;
+  opacity: 0.5;
+}
+
+.dc-hero__bc a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.dc-hero__bc a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.dc-page__wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Przyciski hero — globalne dc-btn */
+.dc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: var(--dc-radius-full, 9999px);
+  font-family: var(--dc-font, "Segoe UI", system-ui, sans-serif);
+  font-size: 15.2px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  line-height: 1.2;
+}
+
+.dc-btn:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.dc-btn:active {
+  transform: translateY(0);
+}
+
+.dc-btn--light {
+  background: #fff;
+  color: var(--dc-brand-deep, #0d6b5c);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.dc-btn--light:hover {
+  color: var(--dc-brand-deep, #0d6b5c);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+}
+
+.dc-btn--ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.dc-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.dc-btn--accent {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.35);
+}
+
+/* Shell layout modułu → przeniesiony do dc-layout.css */
+
+@media (max-width: 640px) {
+  .dc-hero {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .dc-hero__logo {
+    width: min(220px, 50vw);
+    opacity: 0.28;
+  }
+}

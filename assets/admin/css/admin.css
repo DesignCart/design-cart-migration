@@ -1,0 +1,109 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+.dccm-wrap > h1 {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+}
+
+.dc-page .dc-tiles {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)) !important;
+  gap: 0.9rem !important;
+}
+
+.dc-page .dc-tiles--wide {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+}
+
+.dc-page .dc-tile {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.7rem !important;
+  padding: 1.15rem 0.65rem !important;
+  text-decoration: none !important;
+  color: #262c38 !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  background: linear-gradient(145deg, #fafcfd 0%, #f8fafc 100%) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dc-page .dc-tile--wide {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 1rem !important;
+  padding: 1.25rem 1.15rem !important;
+  text-align: left !important;
+}
+
+.dc-page .dc-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.dc-page .dc-tile__icon {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 14px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #fff !important;
+  background: var(--tile-color, #1fa28c) !important;
+  font-size: 1.25rem !important;
+  flex-shrink: 0 !important;
+}
+
+.dc-page .dc-tile__label {
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  color: #262c38 !important;
+  display: block;
+}
+
+.dc-page .dc-tile__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.dc-page .dc-tile__desc {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.dccm-steps {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.dccm-steps li + li {
+  margin-top: 0.55rem;
+}
+
+.dccm-tables-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.dccm-page .dc-toggle {
+  margin-top: 0.25rem;
+}

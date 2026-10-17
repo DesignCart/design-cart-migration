@@ -1,0 +1,144 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — layout modułu (form-card, section-card)
+ * Zgodne z dc_blog admin settings
+ */
+
+.dc-form-card,
+.dc-card {
+  margin-top: -2.75rem;
+  position: relative;
+  z-index: 2;
+  background: var(--dc-surface, #fff);
+  border-radius: var(--dc-radius-xl, 18px);
+  box-shadow: var(--dc-shadow-card);
+  overflow: hidden;
+}
+
+.dc-form-card__body,
+.dc-card__body {
+  padding: 1.5rem 1.75rem 1.75rem;
+}
+
+.dc-form-card .dc-interface,
+.dc-form-card .dc-form {
+  font-size: 17px;
+}
+
+.dc-form-card .dc-form--full,
+.dc-interface .dc-form--full {
+  max-width: none;
+  width: 100%;
+}
+
+/* ─── Section cards ─── */
+.dc-section-card {
+  background: linear-gradient(145deg, #fafcfd 0%, #f8fafc 100%);
+  border: 1px solid var(--dc-line, rgba(15, 23, 42, 0.08));
+  border-radius: var(--dc-radius-sm, 12px);
+  padding: 1.35rem 1.5rem 1.5rem;
+  margin-bottom: 1.15rem;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.dc-section-card:last-child {
+  margin-bottom: 0;
+}
+
+.dc-section-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dc-line, rgba(15, 23, 42, 0.08));
+}
+
+.dc-section-card__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, rgba(var(--dc-brand-rgb, 31, 162, 140), 0.14), rgba(var(--dc-accent-rgb, 28, 167, 202), 0.12));
+  color: var(--dc-brand, #1fa28c);
+  display: grid;
+  place-items: center;
+  font-size: 17.6px;
+}
+
+.dc-section-card__title {
+  margin: 0;
+  font-size: 17.28px;
+  font-weight: 800;
+  color: var(--dc-ink, #0f172a);
+  letter-spacing: -0.02em;
+}
+
+.dc-section-card__sub {
+  margin: 0.2rem 0 0;
+  font-size: 14.08px;
+  color: var(--dc-muted, #64748b);
+}
+
+.dc-section-card .dc-section__title {
+  display: none;
+}
+
+/* Pola w form-card — lekki upgrade jak w blogu */
+.dc-form-card .dc-input,
+.dc-form-card .dc-textarea,
+.dc-form-card .dc-select {
+  padding: 0.82rem 1.05rem;
+  border-radius: var(--dc-radius-sm, 12px);
+  border-color: var(--dc-line, rgba(15, 23, 42, 0.08));
+}
+
+.dc-form-card .dc-input:focus,
+.dc-form-card .dc-textarea:focus,
+.dc-form-card .dc-select:focus {
+  border-color: var(--dc-brand, #1fa28c);
+  box-shadow: 0 0 0 4px rgba(var(--dc-brand-rgb, 31, 162, 140), 0.15);
+}
+
+.dc-form-card .dc-label {
+  font-size: 15.64px;
+  font-weight: 700;
+  color: var(--dc-ink, #0f172a);
+}
+
+.dc-form-card .dc-field {
+  gap: 0.45rem;
+}
+
+.dc-form-card .dc-actions {
+  padding: 1.25rem 0 0;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--dc-line, rgba(15, 23, 42, 0.08));
+}
+
+.dc-form-card .dc-btn--primary {
+  color: #fff !important;
+  padding: 0.85rem 2rem;
+  font-size: 17px;
+  border-radius: var(--dc-radius-full, 9999px);
+  background: linear-gradient(135deg, var(--dc-brand, #1fa28c), var(--dc-accent, #1ca7ca));
+  box-shadow: 0 8px 24px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+}
+
+.dc-form-card .dc-btn--primary:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 32px var(--dc-brand-glow, rgba(31, 162, 140, 0.35));
+}
+
+@media (max-width: 768px) {
+  .dc-form-card__body,
+  .dc-card__body {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,100 @@
+/**
+ * Design Cart Migration
+ * Code: design-cart-migration
+ * Autor: Paweł Nosko — https://www.designcart.pl/pawel-nosko.html
+ * Firma: Design Cart — https://www.designcart.pl/
+ */
+
+/**
+ * DC Interface — tokeny design systemu
+ * Dostępne na .dc-interface (formularze) i .dc-page (layout modułu)
+ */
+
+.dc-interface,
+.dc-page {
+  --dc-brand: #1fa28c;
+  --dc-brand-rgb: 31, 162, 140;
+  --dc-brand-deep: #0d6b5c;
+  --dc-brand-hover: #178a77;
+  --dc-brand-active: #137566;
+  --dc-brand-subtle: rgba(var(--dc-brand-rgb), 0.1);
+  --dc-brand-glow: rgba(var(--dc-brand-rgb), 0.35);
+
+  --dc-accent: #1ca7ca;
+  --dc-accent-rgb: 28, 167, 202;
+  --dc-accent-subtle: rgba(var(--dc-accent-rgb), 0.12);
+
+  --dc-ink: #0f172a;
+  --dc-ink-rgb: 15, 23, 42;
+  --dc-dark: #262c38;
+  --dc-dark-rgb: 38, 44, 56;
+
+  --dc-text: var(--dc-dark);
+  --dc-text-muted: #5c6578;
+  --dc-muted: #64748b;
+  --dc-text-inverse: #ffffff;
+
+  --dc-bg: #ffffff;
+  --dc-bg-muted: #f4f7f9;
+  --dc-surface: #ffffff;
+  --dc-surface-2: #f8fafc;
+  --dc-bg-elevated: #ffffff;
+
+  --dc-border: #d8dee8;
+  --dc-line: rgba(15, 23, 42, 0.08);
+  --dc-border-focus: var(--dc-brand);
+
+  --dc-success: #22a06b;
+  --dc-success-rgb: 34, 160, 107;
+  --dc-success-subtle: rgba(var(--dc-success-rgb), 0.1);
+
+  --dc-error: #e5484d;
+  --dc-error-rgb: 229, 72, 77;
+  --dc-error-subtle: rgba(var(--dc-error-rgb), 0.1);
+
+  --dc-warning: #f5a623;
+  --dc-warning-rgb: 245, 166, 35;
+  --dc-warning-subtle: rgba(var(--dc-warning-rgb), 0.12);
+
+  --dc-radius-sm: 6px;
+  --dc-radius: 10px;
+  --dc-radius-lg: 14px;
+  --dc-radius-xl: 18px;
+  --dc-radius-full: 9999px;
+
+  --dc-space-xs: 0.25rem;
+  --dc-space-sm: 0.5rem;
+  --dc-space: 0.75rem;
+  --dc-space-md: 1rem;
+  --dc-space-lg: 1.5rem;
+  --dc-space-xl: 2rem;
+
+  --dc-shadow-sm: 0 1px 2px rgba(var(--dc-dark-rgb), 0.06);
+  --dc-shadow: 0 4px 16px rgba(var(--dc-dark-rgb), 0.08);
+  --dc-shadow-lg: 0 12px 40px rgba(var(--dc-dark-rgb), 0.12);
+  --dc-shadow-card: 0 24px 64px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.04);
+
+  --dc-font: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --dc-transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --dc-transition-slow: 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dc-interface.dc-dark,
+.dc-page.dc-dark {
+  --dc-text: #e8ecf2;
+  --dc-text-muted: #9aa3b5;
+  --dc-muted: #9aa3b5;
+  --dc-bg: #1a1f28;
+  --dc-bg-muted: #222833;
+  --dc-surface: #262c38;
+  --dc-surface-2: #222833;
+  --dc-bg-elevated: #262c38;
+  --dc-border: #3a4254;
+  --dc-line: rgba(255, 255, 255, 0.08);
+}
+
+.dc-page {
+  font-family: var(--dc-font);
+  color: var(--dc-text);
+  -webkit-font-smoothing: antialiased;
+}
